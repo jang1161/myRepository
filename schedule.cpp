@@ -42,14 +42,15 @@ void howManyNeed(int hmd[7]);
 vector<Alba> setAlba(vector<Alba> v);
 void checkAlba(vector<Alba> v);
 
+
 int main(){
     day[0] = "일"; day[1] = "월"; day[2] = "화"; day[3] = "수"; day[4] = "목"; day[5] = "금"; day[6] = "토";
 
     int SMTWTFS[7];
     vector<Alba> albas;
 
-    // intro();
-    // howManyNeed(SMTWTFS);
+    intro();
+    howManyNeed(SMTWTFS);
     albas = setAlba(albas);
     checkAlba(albas);
 }
@@ -86,8 +87,8 @@ void checkAlba(vector<Alba> v){
     for(int i=0; i<v.size(); i++){
         cout << "노예" << i+1 << " " << v[i].getName() << " 가능한 날 : ";
         for(int j=0; j<7; j++)
-            if(v[i].checkOkay(i))
-                cout << day[i] << " ";
+            if(v[i].checkOkay((j+1)%7))
+                cout << day[(j+1)%7] << " ";
         cout << endl;
     }
 }
