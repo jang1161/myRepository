@@ -1,4 +1,4 @@
-//스케줄 짜는 프로그램
+//스케줄 짜는 프로그램입니다.
 
 #include<iostream>
 #include<vector>
