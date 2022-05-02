@@ -70,7 +70,7 @@ void setAlba(vector<Alba> v){
 
     cout << "알바 총 몇명? : ";
     cin >> totAlba;
-    for(int i=0; i<totAlba; i++){
+    for(int i=0; i<totAlba; i++){ //이곳에 문제 발생
         cout << endl;
         Alba a;
         cout << i+1 << "번째 알바 이름 : ";
