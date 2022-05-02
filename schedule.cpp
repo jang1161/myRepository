@@ -8,7 +8,7 @@ using namespace std;
 map<int, string> day;
 class Alba{
 private :
-    char* name;
+    string name;
     int canDay[7];
 public :
     Alba(){
@@ -16,7 +16,7 @@ public :
             canDay[i] = 1;
     }
 
-    void setName(char* name_){
+    void setName(string name_){
         this->name = name_;
     }
     void setCanDay(){
@@ -28,7 +28,7 @@ public :
             cin >> d;
         }
     }
-    char* getName(){
+    string getName(){
         return name;
     }
     bool checkOkay(int d){
@@ -39,7 +39,7 @@ public :
 
 void intro();
 void howManyNeed(int hmd[7]);
-void setAlba(vector<Alba> v);
+vector<Alba> setAlba(vector<Alba> v);
 void checkAlba(vector<Alba> v);
 
 int main(){
@@ -50,8 +50,8 @@ int main(){
 
     // intro();
     // howManyNeed(SMTWTFS);
-    setAlba(albas);
-    // checkAlba(albas);
+    albas = setAlba(albas);
+    checkAlba(albas);
 }
 
 void intro(){
@@ -64,25 +64,23 @@ void howManyNeed(int hmd[7]){
     }
     cout << endl;
 }
-void setAlba(vector<Alba> v){
+vector<Alba> setAlba(vector<Alba> v){
     int totAlba;
-    char* name;
+    string name;
 
     cout << "알바 총 몇명? : ";
     cin >> totAlba;
-    for(int i=0; i<totAlba; i++){ //이곳에 문제 발생
+    for(int i=0; i<totAlba; i++){
         cout << endl;
         Alba a;
         cout << i+1 << "번째 알바 이름 : ";
         cin >> name;
         a.setName(name);
-        cout << i+1 << "번째 setName 완료" << endl;
         a.setCanDay();
-        cout << i+1 << "번째 setCanDay 완료" << endl;
         v.push_back(a);
-        cout << i+1 << "번째 vector pushback 완료" << endl;
     }
-    cout << "입력 끝";
+    cout << "입력 끝" << endl << endl;
+    return v;
 }
 void checkAlba(vector<Alba> v){
     for(int i=0; i<v.size(); i++){
