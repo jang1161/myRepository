@@ -10,10 +10,15 @@ class Alba{
 private :
     string name;
     int canDay[7];
+    int stack;
+    int rsltDay[7];
 public :
     Alba(){
-        for(int i=0; i<7; i++)
+        for(int i=0; i<7; i++){
             canDay[i] = 1;
+            rsltDay[i] = 0;
+        }
+        stack = 0;
     }
 
     void setName(string name_){
@@ -28,24 +33,25 @@ public :
             cin >> d;
         }
     }
-    string getName(){
-        return name;
-    }
+    string getName(){return name;}
     bool checkOkay(int d){
         if(canDay[d] == 1) return true;
         else return false;
     }
+    void setStack(int stack_){this->stack = stack_;}
+    int getStack(){return stack;}
 };
 
 void intro();
 void howManyNeed(int hmd[7]);
 vector<Alba> setAlba(vector<Alba> v);
 void checkAlba(vector<Alba> v);
+void setHMD(vector<Alba> v, int d[7]);
 
 
 int main(){
     day[0] = "일"; day[1] = "월"; day[2] = "화"; day[3] = "수"; day[4] = "목"; day[5] = "금"; day[6] = "토";
-
+    int howMany;
     int SMTWTFS[7];
     vector<Alba> albas;
 
@@ -53,6 +59,7 @@ int main(){
     howManyNeed(SMTWTFS);
     albas = setAlba(albas);
     checkAlba(albas);
+    setHMD(albas, SMTWTFS);
 }
 
 void intro(){
@@ -91,4 +98,34 @@ void checkAlba(vector<Alba> v){
                 cout << day[(j+1)%7] << " ";
         cout << endl;
     }
+    cout << endl;
+}
+void setHMD(vector<Alba> v, int d[7]){
+    int totDays = 0;
+    int sacrifice;
+    int howMany = v.size();
+
+    for(int i=0; i<7; i++)
+        totDays += d[i];
+    if(totDays%howMany == 0){
+        for(int i=0; i<howMany; i++)
+            v[i].setStack(totDays/howMany);
+    }
+    else{
+        sacrifice = totDays%howMany;
+        cout << sacrifice << "명은 하루를 더 희생해야 합니다... 누가 할래? " << endl;
+        for(int i=0; i<howMany; i++)
+            cout << i+1 << " " << v[i].getName() << endl;
+        for(int i=0; i<sacrifice; i++){ //하루 더 할 사람들
+            int who;
+            cin >> who;
+            v[who-1].setStack(totDays/howMany+1);
+        }
+        for(int i=0; i<howMany; i++) //하루 덜 할 사람들
+            if(v[i].getStack()==0)
+                v[i].setStack(totDays/howMany);
+    }
+    cout << endl;
+    for(int i=0; i<howMany; i++)
+        cout << v[i].getName() << " " << v[i].getStack() << "일" << endl;
 }
