@@ -40,6 +40,18 @@ public :
     }
     void setStack(int stack_){this->stack = stack_;}
     int getStack(){return stack;}
+    void setRsltDay(int d){
+        rsltDay[d] = 1;
+        stack--;
+    }
+    void printRslt(){
+        cout << name << " 출근 요일 : ";
+        for(int i=0; i<7; i++)
+            if(rsltDay[(i+1)%7]==1)
+                cout << day[(i+1)] << " ";
+            
+        cout << endl;
+    }
 };
 
 void intro();
@@ -47,6 +59,8 @@ void howManyNeed(int hmd[7]);
 vector<Alba> setAlba(vector<Alba> v);
 void checkAlba(vector<Alba> v);
 void setHMD(vector<Alba> v, int d[7]);
+void noOtherWay(int week[7], vector<Alba> v);
+void makeComb(int week[7], vector<Alba> v, int i);
 
 
 int main(){
@@ -55,11 +69,15 @@ int main(){
     int SMTWTFS[7];
     vector<Alba> albas;
 
+
     intro();
     howManyNeed(SMTWTFS);
     albas = setAlba(albas);
     checkAlba(albas);
     setHMD(albas, SMTWTFS);
+    noOtherWay(SMTWTFS, albas);
+    for(int i=0; i<albas.size(); i++)
+        albas[i].printRslt();
 }
 
 void intro(){
@@ -68,7 +86,7 @@ void intro(){
 void howManyNeed(int hmd[7]){
     cout << "월화수목금토일 몇명씩?" << endl;
     for(int i=0; i<7; i++){
-        cin >> hmd[i%7];
+        cin >> hmd[(i+1)%7];
     }
     cout << endl;
 }
@@ -127,5 +145,24 @@ void setHMD(vector<Alba> v, int d[7]){
     }
     cout << endl;
     for(int i=0; i<howMany; i++)
-        cout << v[i].getName() << " " << v[i].getStack() << "일" << endl;
+        cout << v[i].getName() << " " << v[i].getStack() << "일 출근" << endl;
+    cout << endl;
+}
+void noOtherWay(int week[7], vector<Alba> v){
+    int albaTot;
+    for(int i=0; i<7; i++){
+        albaTot = 0;
+        for(int j=0; j<v.size(); j++)
+            if(v[j].checkOkay(i))
+                albaTot++;
+        if(albaTot==week[i]){
+            for(int j=0; j<v.size(); j++)
+                if(v[j].checkOkay(i)){
+                    v[j].setRsltDay(i);
+                }
+        }
+    }
+}
+void makeComb(int week[7], vector<Alba> v, int i){
+    
 }
